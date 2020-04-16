@@ -1,0 +1,286 @@
+/*
+ * Copyright 2013 Google Inc.
+ *
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing permissions and
+ *   limitations under the License.
+ *
+ */
+
+/*
+  Software of Site Survey - Reading tags on boxes with RFID.
+
+  Authors: João Neto (code and design)
+   Geyzon Lemos (code and design)
+*/
+
+/* Framework */
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  display: block !important;
+
+  height: 100%;
+  min-height: 740px;
+  
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  background-image: url('../img/bg.jpg');
+  background-size:100% 100%;
+  -webkit-background-size: 100% 100%;
+  -o-background-size: 100% 100%;
+  -khtml-background-size: 100% 100%;
+  -moz-background-size: 100% 100%;  
+  font-family:Verdana;
+  
+  -webkit-user-select: none;  
+  -moz-user-select: none;    
+  -ms-user-select: none;      
+  user-select: none;
+}
+
+/* Builds - Funão de montagem de faces pelo teclado*/
+
+
+.build > * {
+  transition: opacity 0.5s ease-in-out 0.2s;
+  -o-transition: opacity 0.5s ease-in-out 0.2s;
+  -moz-transition: opacity 0.5s ease-in-out 0.2s;
+  -webkit-transition: opacity 0.5s ease-in-out 0.2s;
+}
+
+.to-build {
+  opacity: 0;
+}
+/* ------------------------------------------------------------------------------------- */
+
+/* Panel Function */
+
+#funcoes
+{
+    width: 183px;
+    height: 246px;
+    position: absolute;
+    padding: 40px 10px 10px 10px;
+    top: 20px;
+    left: 20px;
+    background-image: url('../img/bgPanel.png');
+}
+
+#funcoesTopo
+{
+    margin-top:-40px;
+    height:40px;
+    cursor:pointer;
+}
+
+input[type="text"] 
+{
+    float:left;
+    height: 28px;
+    background:#FFF;
+    border: 1px solid #666; 
+   -moz-box-shadow:    inset 0 0 5px #000000;
+   -webkit-box-shadow: inset 0 0 5px #000000;
+   box-shadow:         inset 0 0 5px #000000;
+   margin: 5px 0px 5px 0px;
+   padding: 0px 0px 0px 1%;
+}
+
+/*input[type="button"]*/
+.buttons
+{
+    float:left;
+    width:50px;
+    height:25px;
+    color:#FFF;
+    font-size: 15px; 
+    border:none;   
+    margin: 5px 0px 5px 0px;
+    cursor:pointer;
+    text-align:center;
+    vertical-align:middle;
+    padding-top:5px;
+}
+
+/* ------------------------------------------------------------------------------------- */
+
+/* Pallet Function */
+
+/* Seus estilos individuais aqui, ou apenas usar estilos inline se isso é o que você quer. */
+.scene3d
+{
+    -webkit-perspective: 1000px;
+    width: 550px;
+    height: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.objectScene3D
+{
+    position: absolute;
+    width: inherit;
+    height: inherit; /*top: 20px;*/
+    -webkit-transform-style: preserve-3d;
+    margin-top:20%;
+}
+.objectPallet3D
+{
+    position: absolute;
+    width: inherit;
+    height: inherit; /*top: 20px;*/
+    -webkit-transform-style: preserve-3d;
+}
+.objectBox3D01
+{
+    position: absolute;
+    width: inherit;
+    height: inherit; /*top: 20px;*/
+    -webkit-transform-style: preserve-3d; 
+}
+.objectFaceBox3D
+{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+/* ------------------------------------------------------------------------------------- */
+
+/* CSS para ser usado com o script "spacelaunch" para ligar o slide atual em uma luanchpad e saltar para o espaço 3D. */
+.modellaunch .slides > article.modellaunch-central
+{
+    -webkit-transform: rotateX(80deg) translateY(50px);
+    -webkit-transform-origin: 50% 100%;
+    transition: 0.75s;
+    -webkit-transform-style: preserve-3d;
+}
+.spacelaunch .slides > article.spacelaunch-central
+{
+    -webkit-transform: rotateX(100deg) translateY(1300px) translateZ(-600px);
+    -webkit-transform-origin: 50% 100%;
+    transition: 2s;
+}
+.spacelaunch .slides > article.spacelaunch-right
+{
+    -webkit-transform: translate(1020px) translateZ(500px);
+}
+.spacelaunch .slides > article.spacelaunch-left
+{
+    -webkit-transform: translate(2020px) translateZ(500px);
+}
+/* ------------------------------------------------------------------------------------- */
+
+/* Scene and Objects Functions */
+.Enable
+{
+	background: url('../img/imgV.png');
+}
+
+.bgColorBrack{ background:#000000; }
+.bgColorRed{ background:#FF0000; }
+.bgColorOrange{ background:#FFCC00; }
+.bgColorGreen{ background:#5EC512; }
+
+div#objScene
+{
+	-webkit-transform: translateY(0px) translateX(0px) rotateX(0deg) rotateY(30deg) rotateZ(0deg);	
+}
+
+div#objScene.to-build
+{
+	-webkit-transform: translateY(0px) translateX(0px) rotateX(0deg) rotateY(-210deg) rotateZ(0deg);
+}
+
+div#objScene.end
+{
+	-webkit-animation: rotate3d linear infinite 50s;
+}
+
+@-webkit-keyframes rotate3d
+{
+	from { -webkit-transform: translateX(0px) rotateX(0deg)   rotateY(0deg)   rotateZ(0deg); }
+	to   { -webkit-transform: translateX(0px) rotateX(0deg) rotateY(360deg) rotateZ(0deg); }
+}
+
+
+/*-- BOXES --*/
+.objectBox3D01{  display:block; position:absolute;}
+.objectBox3D01 img{display:block; position:absolute;}
+.objectBox3D01 div{display:block; position:absolute;}
+
+
+/*--PALLET--*/
+.objectPallet3D{ -webkit-transform: translateX(0px) translateY(165px) translateZ(-275px) rotateX(0deg) rotateY(0deg) rotateZ(0deg); display:block; position:absolute;}
+
+/*--TOP--*/
+#paT01 { top: 30px; -webkit-transform: translateY(210px) rotateX(90deg);}
+#paT01L01 { top: 30px; -webkit-transform: translateY(210px) rotateY(-90deg);}
+#paT01L02 { top: 30px; -webkit-transform: translateY(210px) translateX(550px) rotateY(-90deg);}
+#paT01E01 { top: 30px; -webkit-transform: translateY(220px) rotateZ(-90deg);}
+#paT01E02 { top: 30px; -webkit-transform: translateY(220px) translateZ(80px) rotateZ(-90deg);}
+#paB01 { top: 30px; -webkit-transform: translateY(220px) rotateX(90deg);}
+
+#paT02 { top: 30px; -webkit-transform: translateY(210px) translateZ(125px)  rotateX(90deg);}
+#paT02L01 { top: 30px; -webkit-transform: translateY(210px) translateZ(125px) rotateY(-90deg);}
+#paT02L02 { top: 30px; -webkit-transform: translateY(210px) translateZ(125px) translateX(550px) rotateY(-90deg);}
+#paT02E01 { top: 30px; -webkit-transform: translateY(220px) translateZ(125px) rotateZ(-90deg);}
+#paT02E02 { top: 30px; -webkit-transform: translateY(220px) translateZ(205px) rotateZ(-90deg);}
+#paB02 { top: 30px; -webkit-transform: translateY(220px) translateZ(125px) rotateX(90deg);}
+
+#paT03 { top: 30px; -webkit-transform: translateY(210px) translateZ(235px)  rotateX(90deg);}
+#paT03L01 { top: 30px; -webkit-transform: translateY(210px) translateZ(235px) rotateY(-90deg);}
+#paT03L02 { top: 30px; -webkit-transform: translateY(210px) translateZ(235px) translateX(550px) rotateY(-90deg);}
+#paT03E01 { top: 30px; -webkit-transform: translateY(220px) translateZ(235px) rotateZ(-90deg);}
+#paT03E02 { top: 30px; -webkit-transform: translateY(220px) translateZ(315px) rotateZ(-90deg);}
+#paB03 { top: 30px; -webkit-transform: translateY(220px) translateZ(235px) rotateX(90deg);}
+
+#paT04 { top: 30px; -webkit-transform: translateY(210px) translateZ(345px)  rotateX(90deg);}
+#paT04L01 { top: 30px; -webkit-transform: translateY(210px) translateZ(345px) rotateY(-90deg);}
+#paT04L02 { top: 30px; -webkit-transform: translateY(210px) translateZ(345px) translateX(550px) rotateY(-90deg);}
+#paT04E01 { top: 30px; -webkit-transform: translateY(220px) translateZ(345px) rotateZ(-90deg);}
+#paT04E02 { top: 30px; -webkit-transform: translateY(220px) translateZ(425px) rotateZ(-90deg);}
+#paB04 { top: 30px; -webkit-transform: translateY(220px) translateZ(345px) rotateX(90deg);}
+
+#paT05 { top: 30px; -webkit-transform: translateY(210px) translateZ(470px)  rotateX(90deg);}
+#paT05L01 { top: 30px; -webkit-transform: translateY(210px) translateZ(470px) rotateY(-90deg);}
+#paT05L02 { top: 30px; -webkit-transform: translateY(210px) translateZ(470px) translateX(550px) rotateY(-90deg);}
+#paT05E01 { top: 30px; -webkit-transform: translateY(220px) translateZ(470px) rotateZ(-90deg);}
+#paT05E02 { top: 30px; -webkit-transform: translateY(220px) translateZ(550px) rotateZ(-90deg);}
+#paB05 { top: 30px; -webkit-transform: translateY(220px) translateZ(470px) rotateX(90deg);}
+
+/*--PARTE DE BAIXO--*/
+#paT06 { top: 30px; -webkit-transform: translateY(222px) translateZ(550px) rotateY(90deg) rotateX(90deg);}
+#paT06L01 { top: 30px; -webkit-transform: translateY(222px) rotateX(90deg) rotateX(-90deg); }
+#paT06L02 { top: 30px; -webkit-transform: translateY(222px) translateZ(550px) rotateX(90deg) rotateX(-90deg);}
+#paT06E01 { top: 30px; -webkit-transform: translateY(231px) rotateZ(-90deg) rotateX(90deg);}
+#paT06E02 { top: 30px; -webkit-transform: translateY(231px) translateX(80px) rotateZ(-90deg) rotateX(90deg);}
+#paB06 { top: 30px; -webkit-transform: translateY(232px) translateZ(550px) rotateY(90deg) rotateX(90deg);}
+
+#paT07 { top: 30px; -webkit-transform: translateY(221px) translateZ(550px) rotateY(90deg) rotateX(90deg) translateY(235px);}
+#paT07L01 { top: 30px; -webkit-transform: translateY(221px) rotateX(90deg) rotateX(-90deg) translateX(235px); }
+#paT07L02 { top: 30px; -webkit-transform: translateY(221px) translateZ(550px) rotateX(90deg) rotateX(-90deg) translateX(235px); }
+#paT07E01 { top: 30px; -webkit-transform: translateY(230px) translateX(235px)rotateZ(-90deg) rotateX(90deg) ; }
+#paT07E02 { top: 30px; -webkit-transform: translateY(230px) translateX(315px) rotateZ(-90deg) rotateX(90deg); }
+#paB07 { top: 30px; -webkit-transform: translateY(231px) translateZ(550px) rotateY(90deg) rotateX(90deg) translateY(235px);}
+
+#paT08 { top: 30px; -webkit-transform: translateY(221px) translateZ(550px) rotateY(90deg) rotateX(90deg) translateY(470px);}
+#paT08L01 { top: 30px; -webkit-transform: translateY(221px) rotateX(90deg) rotateX(-90deg) translateX(470px); }
+#paT08L02 { top: 30px; -webkit-transform: translateY(221px) translateZ(550px) rotateX(90deg) rotateX(-90deg) translateX(470px); }
+#paT08E01 { top: 30px; -webkit-transform: translateY(230px) translateX(470px)rotateZ(-90deg) rotateX(90deg) ; }
+#paT08E02 { top: 30px; -webkit-transform: translateY(230px) translateX(550px) rotateZ(-90deg) rotateX(90deg); }
+#paB08 { top: 30px; -webkit-transform: translateY(231px) translateZ(550px) rotateY(90deg) rotateX(90deg) translateY(470px);}
