@@ -1,5 +1,5 @@
 # 3D-Pallet-Survey-RFID
-The project has as objective to do a pallet survey in 3D to warehouse expedition logistics.
+Developer in 2013 the project has as objective to do a pallet survey in 3D to warehouse expedition logistics.
 It was used an ASP.NET 4.5 Framework with C#, HTML5, JQuery, and RFID Radiofrequency.
 
 ## Diagram
